@@ -1,0 +1,49 @@
+Description: typo in man-pages
+Author: Jörg Frings-Fürst <debian@jff.email>
+Last-Update: 2019-07-18
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+Index: trunk/doc/ipmitool.1
+===================================================================
+--- trunk.orig/doc/ipmitool.1
++++ trunk/doc/ipmitool.1
+@@ -2478,7 +2478,7 @@ Discover Node Manager presence as well a
+ .br
+ 
+ Add a new power policy, or overwrite an existing policy.
+-The \fIcorrection\fP parameter is the agressiveness of frequency limiting, default is auto.
++The \fIcorrection\fP parameter is the aggressiveness of frequency limiting, default is auto.
+ The \fItrig_lim\fP is the correction time limit and must be at least 6000 and not greater than 65535.
+ The \fIstats\fP setting is the averaging period in seconds and ranges from 1-65535.
+ If domain is not supplied a default of platform is used.
+@@ -2489,7 +2489,7 @@ If domain is not supplied a default of p
+ .br
+ 
+ Add a new inlet temp policy, or overwrite an existing policy.
+-The \fIcorrection\fP parameter is the agressiveness of frequency limiting, default is auto.
++The \fIcorrection\fP parameter is the aggressiveness of frequency limiting, default is auto.
+ The \fItrig_lim\fP is the correction time limit and must be at least 6000 and not greater than 65535.
+ The \fIstats\fP setting is the averaging period in seconds and ranges from 1-65535.
+ If domain is not supplied a default of platform is used.
+@@ -3657,7 +3657,7 @@ and encryption algorithms to use for for
+ on the cipher suite ID found in the IPMIv2.0 specification in table
+ 22\-19.  The default cipher suite is \fI3\fP which specifies
+ RAKP\-HMAC\-SHA1 authentication, HMAC\-SHA1\-96 integrity, and AES\-CBC\-128
+-encryption algorightms.
++encryption algorithms.
+ 
+ .SH "FREE INTERFACE"
+ .LP
+Index: trunk/doc/ipmievd.8
+===================================================================
+--- trunk.orig/doc/ipmievd.8
++++ trunk/doc/ipmievd.8
+@@ -56,7 +56,7 @@ This is not available with all commands.
+ The remote server authentication, integrity, and encryption algorithms
+ to use for IPMIv2 \fIlanplus\fP connections.  See table 22\-19 in the
+ IPMIv2 specification.  The default is 3 which specifies RAKP\-HMAC\-SHA1 
+-authentication, HMAC\-SHA1\-96 integrity, and AES\-CBC\-128 encryption algorightms.
++authentication, HMAC\-SHA1\-96 integrity, and AES\-CBC\-128 encryption algorithms.
+ .TP 
+ \fB\-E\fR
+ The remote server password is specified by the environment

@@ -1,0 +1,29 @@
+Description: Fix lanplus segment violation for truncated response
+Origin: upstream, https://github.com/pjdhpe/ipmitool/commit/815aae70cf8dc9f0e1ba1923fc4ec3cc16d0d2f1?diff=unified
+Bug: https://github.com/ipmitool/ipmitool/issues/72
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=945764
+Last-Update: 2019-12-22 
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+Index: trunk/src/plugins/lanplus/lanplus.c
+===================================================================
+--- trunk.orig/src/plugins/lanplus/lanplus.c
++++ trunk/src/plugins/lanplus/lanplus.c
+@@ -819,7 +819,7 @@ ipmi_lan_poll_single(struct ipmi_intf *
+ 			 * rsp->data_len becomes the length of that data
+ 			 */
+ 			extra_data_length = payload_size - (offset - payload_start) - 1;
+-			if (extra_data_length) {
++			if (extra_data_length > 0) {
+ 				rsp->data_len = extra_data_length;
+ 				memmove(rsp->data, rsp->data + offset, extra_data_length);
+ 			} else {
+@@ -873,7 +873,7 @@ ipmi_lan_poll_single(struct ipmi_intf *
+ 		}
+ 		read_sol_packet(rsp, &offset);
+ 		extra_data_length = payload_size - (offset - payload_start);
+-		if (rsp && extra_data_length) {
++		if (rsp && extra_data_length > 0) {
+ 			rsp->data_len = extra_data_length;
+ 			memmove(rsp->data, rsp->data + offset, extra_data_length);
+ 		} else {

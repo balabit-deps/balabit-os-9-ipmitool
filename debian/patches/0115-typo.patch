@@ -1,0 +1,164 @@
+Description: source typos
+Author: Jörg Frings-Fürst <debian@jff-webhosting.net>
+Forwarded: not-needed
+Last-Update: 2017-08-13
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+Index: trunk/lib/dimm_spd.c
+===================================================================
+--- trunk.orig/lib/dimm_spd.c
++++ trunk/lib/dimm_spd.c
+@@ -798,7 +798,7 @@ const struct valstr jedec_id5_vals[] = {
+ 	{ 0xE3, "WIS Technologies" },
+ 	{ 0x64, "GateChange Technologies" },
+ 	{ 0xE5, "High Density Devices AS" },
+-	{ 0xE6, "Synopsys" },
++	{ 0xE6, "Synopsis" },
+ 	{ 0x67, "Gigaram" },
+ 	{ 0x68, "Enigma Semiconductor Inc." },
+ 	{ 0xE9, "Century Micro Inc." },
+Index: trunk/lib/ipmi_hpmfwupg.c
+===================================================================
+--- trunk.orig/lib/ipmi_hpmfwupg.c
++++ trunk/lib/ipmi_hpmfwupg.c
+@@ -1507,7 +1507,7 @@ HpmfwupgGetTargetUpgCapabilities(struct
+ 				pCtx->resp.GlobalCapabilities.bitField.autRollbackOverride ? 'y' : 'n');
+ 		lprintf(LOG_NOTICE, "IPMC degraded...........[%c]   ",
+ 				pCtx->resp.GlobalCapabilities.bitField.ipmcDegradedDurinUpg ? 'y' : 'n');
+-		lprintf(LOG_NOTICE, "Defered activation......[%c]   ",
++		lprintf(LOG_NOTICE, "Deferred activation......[%c]   ",
+ 				pCtx->resp.GlobalCapabilities.bitField.deferActivation ? 'y' : 'n');
+ 		lprintf(LOG_NOTICE, "Service affected........[%c]   ",
+ 				pCtx->resp.GlobalCapabilities.bitField.servAffectDuringUpg ? 'y' : 'n');
+Index: trunk/lib/ipmi_kontronoem.c
+===================================================================
+--- trunk.orig/lib/ipmi_kontronoem.c
++++ trunk/lib/ipmi_kontronoem.c
+@@ -85,7 +85,7 @@ ipmi_kontronoem_main(struct ipmi_intf *i
+ 			return (-1);
+ 		}
+ 		if (ipmi_kontron_set_serial_number(intf) > 0) {
+-			printf("FRU serial number setted successfully\n");
++			printf("FRU serial number set successfully\n");
+ 		} else {
+ 			printf("FRU serial number set failed\n");
+ 			rc = (-1);
+@@ -96,7 +96,7 @@ ipmi_kontronoem_main(struct ipmi_intf *i
+ 			return (-1);
+ 		}
+ 		if (ipmi_kontron_set_mfg_date(intf) > 0) {
+-			printf("FRU manufacturing date setted successfully\n");
++			printf("FRU manufacturing date set successfully\n");
+ 		} else {
+ 			printf("FRU manufacturing date set failed\n");
+ 			rc = (-1);
+Index: trunk/lib/ipmi_ekanalyzer.c
+===================================================================
+--- trunk.orig/lib/ipmi_ekanalyzer.c
++++ trunk/lib/ipmi_ekanalyzer.c
+@@ -3398,7 +3398,7 @@ ipmi_ek_display_board_p2p_record(struct
+ 				printf("ShMC Cross-connect (two-pair)\n");
+ 				break;
+ 			default:
+-				printf("Unknwon\n");
++				printf("Unknown\n");
+ 				break;
+ 			}
+ 		} else if (d->type == FRU_PICMGEXT_LINK_TYPE_FABRIC_ETHERNET) {
+@@ -3413,17 +3413,17 @@ ipmi_ek_display_board_p2p_record(struct
+ 				printf("FC-PI\n");
+ 				break;
+ 			default:
+-				printf("Unknwon\n");
++				printf("Unknown\n");
+ 				break;
+ 			}
+ 		} else if (d->type == FRU_PICMGEXT_LINK_TYPE_FABRIC_INFINIBAND) {
+-			printf("Unknwon\n");
++			printf("Unknown\n");
+ 		} else if (d->type == FRU_PICMGEXT_LINK_TYPE_FABRIC_STAR) {
+-			printf("Unknwon\n");
++			printf("Unknown\n");
+ 		} else if (d->type == FRU_PICMGEXT_LINK_TYPE_PCIE) {
+-			printf("Unknwon\n");
++			printf("Unknown\n");
+ 		} else {
+-			printf("Unknwon\n");
++			printf("Unknown\n");
+ 		}
+ 		printf("\tLink Type:\t\t0x%02x - ", d->type);
+ 		if (d->type == 0 || d->type == 0xff) {
+Index: trunk/src/ipmievd.c
+===================================================================
+--- trunk.orig/src/ipmievd.c
++++ trunk/src/ipmievd.c
+@@ -125,7 +125,7 @@ static int openipmi_wait(struct ipmi_eve
+ static int openipmi_read(struct ipmi_event_intf * eintf);
+ static struct ipmi_event_intf openipmi_event_intf = {
+ 	.name = "open",
+-	.desc = "OpenIPMI asyncronous notification of events",
++	.desc = "OpenIPMI asynchronous notification of events",
+ 	.prefix = "",
+ 	.setup = openipmi_setup,
+ 	.wait = openipmi_wait,
+@@ -864,7 +864,7 @@ ipmievd_open_main(struct ipmi_intf * int
+ 
+ struct ipmi_cmd ipmievd_cmd_list[] = {
+ #ifdef IPMI_INTF_OPEN
+-	{ ipmievd_open_main,	"open",   "Use OpenIPMI for asyncronous notification of events" },
++	{ ipmievd_open_main,	"open",   "Use OpenIPMI for asynchronous notification of events" },
+ #endif
+ 	{ ipmievd_sel_main,	"sel",    "Poll SEL for notification of events" },
+ 	{ NULL }
+Index: trunk/include/ipmitool/ipmi_pef.h
+===================================================================
+--- trunk.orig/include/ipmitool/ipmi_pef.h
++++ trunk/include/ipmitool/ipmi_pef.h
+@@ -178,7 +178,7 @@ BIT_DESC_MAP_LIST,
+ 	{"Entity presence",				37},
+ 	{"Monitor ASIC/IC",				38},
+ 	{"LAN",								39},
+-	{"Management subsytem health",40},
++	{"Management subsystem health",40},
+ 	{"Battery",							41},
+ 	{NULL}
+ }	};
+Index: trunk/doc/ipmievd.8
+===================================================================
+--- trunk.orig/doc/ipmievd.8
++++ trunk/doc/ipmievd.8
+@@ -145,7 +145,7 @@ placed at the end of commands to get opt
+ > ipmievd help
+ .br 
+ Commands:
+-    open    Use OpenIPMI for asyncronous notification of events
++    open    Use OpenIPMI for asynchronous notification of events
+     sel     Poll SEL for notification of events
+ 
+ .TP 
+Index: trunk/lib/ipmi_lanp.c
+===================================================================
+--- trunk.orig/lib/ipmi_lanp.c
++++ trunk/lib/ipmi_lanp.c
+@@ -1271,7 +1271,7 @@ print_lan_set_bad_pass_thresh_usage(void
+ {
+ 	lprintf(LOG_NOTICE,
+ "lan set <chanel> bad_pass_thresh <thresh_num> <1|0> <reset_interval> <lockout_interval>\n"
+-"        <thresh_num>         Bad Pasword Threshold number.\n"
++"        <thresh_num>         Bad Password Threshold number.\n"
+ "        <1|0>                1 = generate a Session Audit sensor event.\n"
+ "                             0 = do not generate an event.\n"
+ "        <reset_interval>     Attempt Count Reset Interval. In tens of seconds.\n"
+Index: trunk/lib/ipmi_mc.c
+===================================================================
+--- trunk.orig/lib/ipmi_mc.c
++++ trunk/lib/ipmi_mc.c
+@@ -583,7 +583,7 @@ static int ipmi_mc_get_selftest(struct i
+ 			printf(" -> SEL device not accessible\n");
+ 		}
+ 		if (sft_res->test & IPM_SELFTEST_SDR_ERROR) {
+-			printf(" -> SDR repository not accesible\n");
++			printf(" -> SDR repository not accessible\n");
+ 		}
+ 		if (sft_res->test & IPM_SELFTEST_FRU_ERROR) {
+ 			printf("FRU device not accessible\n");

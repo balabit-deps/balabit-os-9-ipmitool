@@ -1,0 +1,63 @@
+Description: Fix ftbfs with gcc-10
+Author: Jörg Frings-Fürst <debian@jff.email>
+Bug: https://github.com/ipmitool/ipmitool/issues/220
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=957371
+Last-Update: 2020-07-28
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+Index: trunk/include/ipmitool/ipmi_hpmfwupg.h
+===================================================================
+--- trunk.orig/include/ipmitool/ipmi_hpmfwupg.h
++++ trunk/include/ipmitool/ipmi_hpmfwupg.h
+@@ -30,9 +30,22 @@
+  * EVEN IF SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+  */
+ 
++
+ #ifndef IPMI_HPMFWUPG_H
+ #define IPMI_HPMFWUPG_H
+ 
++
++#ifdef IPMI_HPMFWUPG_MOD
++
++    #define EXTERN
++
++#else
++
++    #define EXTERN extern
++
++#endif
++
++
+ #include <inttypes.h>
+ #include <ipmitool/ipmi.h>
+ 
+@@ -800,10 +813,12 @@ typedef struct _VERSIONINFO {
+ 	char descString[HPMFWUPG_DESC_STRING_LENGTH + 1];
+ }VERSIONINFO, *PVERSIONINFO;
+ 
+-VERSIONINFO gVersionInfo[HPMFWUPG_COMPONENT_ID_MAX];
++EXTERN VERSIONINFO gVersionInfo[HPMFWUPG_COMPONENT_ID_MAX];
+ 
+ #define TARGET_VER (0x01)
+ #define ROLLBACK_VER (0x02)
+ #define IMAGE_VER (0x04)
+ 
+ #endif /* IPMI_KFWUM_H */
++
++#undef EXTERN
+Index: trunk/lib/ipmi_hpmfwupg.c
+===================================================================
+--- trunk.orig/lib/ipmi_hpmfwupg.c
++++ trunk/lib/ipmi_hpmfwupg.c
+@@ -37,7 +37,10 @@
+ 
+ #include <ipmitool/ipmi_intf.h>
+ #include <ipmitool/ipmi_mc.h>
++
++#define IPMI_HPMFWUPG_MOD
+ #include <ipmitool/ipmi_hpmfwupg.h>
++
+ #include <ipmitool/helper.h>
+ #include <ipmitool/ipmi_strings.h>
+ #include <ipmitool/log.h>
