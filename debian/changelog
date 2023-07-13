@@ -1,3 +1,13 @@
+ipmitool (1.8.18-11ubuntu2.1) jammy; urgency=medium
+
+  * Fix persistent boot options when multiple options are set. Previously
+    flags were wiped out due to a logic error, leaving only the final flag
+    set. This set of patches ensures that all flags are set correctly.
+    (LP: #2017701)
+    - d/p/lp2017701-chassis-bootparam-bootdev-Refactor-for-less-magic.patch
+
+ -- Matthew Ruffell <matthew.ruffell@canonical.com>  Thu, 13 Jul 2023 15:16:17 +1200
+
 ipmitool (1.8.18-11ubuntu2) jammy; urgency=medium
 
   * No-change rebuild against openssl3

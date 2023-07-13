@@ -1,0 +1,31 @@
+Author: Alexander Amelkin <alexander@amelkin.msk.ru>
+Author: Matthew Ruffell <matthew.ruffell@canonical.com>
+Date: Wed, 6 Nov 2019 11:40:15 +0300
+Subject: chassis: bootparam/bootdev: Refactor for less magic
+ Fix resetting of all other boot flags in the data byte when
+ setting any of the bits in the same byte. This fixes inability
+ to set both 'efiboot' and 'persistent' bits at the same time,
+ and other similar cases.
+ 
+ Resolves ipmitool/ipmitool#163
+ [mruffell: backport only the logic change to fix the actual issue
+ where all flags were being clobbered instead of clearing the bit
+ being set.]
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/2017701
+Bug: https://github.com/ipmitool/ipmitool/issues/163
+Origin: backport, https://github.com/ipmitool/ipmitool/commit/4b89f1b42d94a9bb96093d5e5237c7f1cfd84580
+Last-Update: 2023-07-13
+
+Index: ipmitool-1.8.18/lib/ipmi_chassis.c
+===================================================================
+--- ipmitool-1.8.18.orig/lib/ipmi_chassis.c	2023-07-13 15:15:29.339317980 +1200
++++ ipmitool-1.8.18/lib/ipmi_chassis.c	2023-07-13 15:15:29.335317939 +1200
+@@ -1354,7 +1354,7 @@
+ 				}
+ 				for (op = options; op->name != NULL; ++op) {
+ 					if (strcmp(token, op->name) == 0) {
+-						flags[op->i] &= op->mask;
++						flags[op->i] &= ~(op->mask);
+ 						flags[op->i] |= op->value;
+ 						break;
+ 					}
