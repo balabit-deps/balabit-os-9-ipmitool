@@ -1,0 +1,49 @@
+Description: UBUNTU: SAUCE: sel/sdr : Fix SEL cannot display Sensor name when sensor owner lun1
+ IPMI specification only allows for a 1 byte sensor number field, in
+ AMI SP-X firmware owner lun bits(1:0) in the SDR may be used to
+ extend sensor count beyond 255 sensors
+
+ The change will add checking of SEL Generator ID byte 2 LUN bits [1:0]
+ in the compare with the SDR LUN field to display the correct SDR string
+ in the SEL event
+ .
+Origin: other, https://codeberg.org/IPMITool/ipmitool/pulls/39
+Bug: https://codeberg.org/IPMITool/ipmitool/issues/8
+Bug-Ubuntu: https://launchpad.net/bugs/2076173
+Forwarded: https://codeberg.org/IPMITool/ipmitool/pulls/39
+Last-Update: 2025-04-10
+---
+
+--- ipmitool-1.8.19.orig/lib/ipmi_sdr.c
++++ ipmitool-1.8.19/lib/ipmi_sdr.c
+@@ -3362,12 +3362,14 @@ ipmi_sdr_find_sdr_bynumtype(struct ipmi_
+ 		case SDR_RECORD_TYPE_COMPACT_SENSOR:
+ 			if (e->record.common->keys.sensor_num == num &&
+ 			    e->record.common->keys.owner_id == (gen_id & 0x00ff) &&
++			    e->record.common->keys.lun == ((gen_id & 0x0300) >> 8) &&
+ 			    e->record.common->sensor.type == type)
+ 				return e;
+ 			break;
+ 		case SDR_RECORD_TYPE_EVENTONLY_SENSOR:
+ 			if (e->record.eventonly->keys.sensor_num == num &&
+ 			    e->record.eventonly->keys.owner_id == (gen_id & 0x00ff) &&
++			    e->record.eventonly->keys.lun == ((gen_id & 0x0300) >> 0x8) &&
+ 			    e->record.eventonly->sensor_type == type)
+ 				return e;
+ 			break;
+@@ -3404,6 +3406,7 @@ ipmi_sdr_find_sdr_bynumtype(struct ipmi_
+ 			    (struct sdr_record_common_sensor *) rec;
+ 			if (sdrr->record.common->keys.sensor_num == num
+ 			    && sdrr->record.common->keys.owner_id == (gen_id & 0x00ff)
++			    && sdrr->record.common->keys.lun == ((gen_id & 0x0300) >> 8)
+ 			    && sdrr->record.common->sensor.type == type)
+ 				found = 1;
+ 			break;
+@@ -3412,6 +3415,7 @@ ipmi_sdr_find_sdr_bynumtype(struct ipmi_
+ 			    (struct sdr_record_eventonly_sensor *) rec;
+ 			if (sdrr->record.eventonly->keys.sensor_num == num
+ 			    && sdrr->record.eventonly->keys.owner_id == (gen_id & 0x00ff)
++			    && sdrr->record.eventonly->keys.lun == ((gen_id & 0x0300) >> 8)
+ 			    && sdrr->record.eventonly->sensor_type == type)
+ 				found = 1;
+ 			break;

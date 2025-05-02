@@ -1,3 +1,10 @@
+ipmitool (1.8.18-11ubuntu2.2) jammy; urgency=medium
+
+  * d/patches: Apply sauce patch not addressed by upstream
+    + sel/sdr : Fix SEL cannot display Sensor name (lp: #2076173)
+
+ -- Mitchell Augustin <mitchell.augustin@canonical.com>  Fri, 2 May 2025 18:05:00 -0500
+
 ipmitool (1.8.18-11ubuntu2.1) jammy; urgency=medium
 
   * Fix persistent boot options when multiple options are set. Previously

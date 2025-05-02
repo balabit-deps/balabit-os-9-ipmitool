@@ -18,3 +18,4 @@ CVE-2020-5208_5_lanp-Fix-buffer-overflows-in-get_lan_param_select.patch
 CVE-2020-5208_6-fru-sdr-Fix-id_string-buffer-overflows.patch
 add_basic_support_for_quanta.patch
 lp2017701-chassis-bootparam-bootdev-Refactor-for-less-magic.patch
+selsdr-fix-SEL-cannot-display-sensor-name-when-owner-lun1.patch
